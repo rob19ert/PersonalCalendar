@@ -203,6 +203,7 @@ main {
     background-color: white;
     position: relative;
     min-height: 300px;
+    padding-top: 12px;
 }
 
 .time-grid {
@@ -394,5 +395,32 @@ main {
         min-height: 100vh;
         box-shadow: none;
         border: none;
+    }
+    main {
+        padding: 16px;
+    }
+    .task-form {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+    .input-row {
+        gap: 8px;
+    }
+    #task-input {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        min-width: 0;
+    }
+    #add-btn {
+        width: 44px;
+        height: 44px;
+    }
+    .time-selectors {
+        gap: 6px;
+    }
+    .time-selectors input[type="time"] {
+        padding: 8px;
+        font-size: 0.85rem;
+        min-width: 0;
     }
 }
