@@ -1,0 +1,398 @@
+:root {
+    --bg-color: #f3f4f6;
+    --app-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --border-color: #e5e7eb;
+    --danger: #ef4444;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.app-container {
+    background-color: var(--app-bg);
+    width: 100%;
+    max-width: 480px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.calendar-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.calendar-panel::-webkit-scrollbar {
+    display: none;
+}
+
+.day-btn {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 64px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 8px;
+}
+
+.day-btn:last-child {
+    margin-right: 0;
+}
+
+.day-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.day-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+}
+
+.day-btn.active .day-name {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.day-number {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.selected-date-display {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+main {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Styles */
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    background-color: #f9fafb;
+    padding: 16px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+#task-input {
+    flex-grow: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#task-input:focus {
+    border-color: var(--primary);
+}
+
+#add-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+#add-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.time-selectors {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-selectors input[type="time"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background-color: white;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.time-separator {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Grid Styles */
+.time-grid-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    position: relative;
+    min-height: 300px;
+}
+
+.time-grid {
+    position: relative;
+    /* Height will be handled by JS or static (18 hours * 60px = 1080px) */
+    min-height: 1080px; 
+}
+
+.grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.grid-line {
+    display: flex;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border-color);
+    /* Each hour is 60px. A 2-hour interval is 120px, but let's render every hour line. */
+    height: 60px;
+}
+
+.grid-line.half-line {
+    border-bottom: 1px dashed var(--border-color);
+    opacity: 0.5;
+}
+
+.time-label {
+    width: 60px;
+    padding-right: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    flex-shrink: 0;
+    text-align: right;
+    transform: translateY(-8px);
+    background-color: white;
+}
+
+.grid-line-content {
+    flex-grow: 1;
+    border-left: 1px solid var(--border-color);
+}
+
+.grid-tasks {
+    position: absolute;
+    top: 0;
+    left: 60px; /* Offset for time labels */
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+/* Task Item in Grid (Absolutely Positioned) */
+.task-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 8px;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.task-item:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.task-item.completed {
+    background-color: rgba(107, 114, 128, 0.1);
+    border-color: rgba(107, 114, 128, 0.3);
+    border-left-color: var(--text-muted);
+}
+
+.task-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.checkbox {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    background-color: white;
+}
+
+.checkbox:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.task-item.completed .checkbox {
+    border-color: var(--text-muted);
+}
+.task-item.completed .checkbox:checked {
+    background-color: var(--text-muted);
+}
+
+.checkbox:checked::after {
+    content: '';
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+}
+
+.task-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.task-time-badge {
+    font-size: 0.7rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.task-text {
+    font-size: 0.85rem;
+    line-height: 1.2;
+    font-weight: 500;
+    word-break: break-word;
+    /* allow truncation if too small */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-item.completed .task-text {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.task-item.completed .task-time-badge {
+    color: var(--text-muted);
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s, background-color 0.2s;
+    margin-left: auto;
+}
+
+.delete-btn:hover {
+    color: var(--danger);
+    background-color: #fee2e2;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0;
+    }
+    .app-container {
+        border-radius: 0;
+        min-height: 100vh;
+        box-shadow: none;
+        border: none;
+    }
+}

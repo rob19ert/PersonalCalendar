@@ -1,0 +1,17 @@
+{
+  "name": "Personal Calendar To-Do",
+  "short_name": "Calendar",
+  "description": "A stylish To-Do list with a Time Grid and Calendar.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
